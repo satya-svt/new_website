@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { supabase, getCurrentUserEmail } from '../lib/supabase'
 import { Send, CheckCircle, AlertCircle, ChevronDown, Weight, Hash, LogOut } from 'lucide-react'
@@ -19,11 +19,7 @@ const unitOptions = ['gms', 'kg', 'Quintal', 'Tons']
 
 export default function UserForm() {
   const navigate = useNavigate()
-  const [formData, setFormData] = useState({
-    feed_type: '',
-    quantity: '',
-    unit: ''
-  })
+  const [formData, setFormData] = useState({ feed_type: '', quantity: '', unit: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
@@ -39,14 +35,9 @@ export default function UserForm() {
     setSubmitStatus('idle')
 
     try {
-      // Get the current user's email
       const userEmail = await getCurrentUserEmail()
-      
-      if (!userEmail) {
-        throw new Error('User email not found. Please ensure you are logged in.')
-      }
+      if (!userEmail) throw new Error('User email not found. Please ensure you are logged in.')
 
-      // Map form data to match the database schema
       const dataToInsert = {
         name: formData.feed_type,
         description: `Feed quantity: ${formData.quantity} ${formData.unit}`,
@@ -57,9 +48,10 @@ export default function UserForm() {
         priority: 'medium',
         user_email: userEmail
       }
-      
+
       const { error } = await supabase.from('data_rows').insert([dataToInsert])
       if (error) throw error
+
       setSubmitStatus('success')
       setFormData({ feed_type: '', quantity: '', unit: '' })
       setTimeout(() => setSubmitStatus('idle'), 5000)
@@ -76,18 +68,8 @@ export default function UserForm() {
 
   if (submitStatus === 'success') {
     return (
-      <motion.div 
-        className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <motion.div 
-          className="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 text-center"
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-        >
+      <motion.div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
+        <motion.div className="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 text-center">
           <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-8 h-8 text-green-400" />
           </div>
@@ -107,14 +89,9 @@ export default function UserForm() {
   }
 
   return (
-    <motion.div 
-      className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <motion.div 
-        className="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 shadow-2xl"
+    <motion.div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
+      <motion.div
+        className="max-w-2xl w-full bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-10 shadow-2xl"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
@@ -137,12 +114,7 @@ export default function UserForm() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-4">
-            {/* Feed Type */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 }}
-            >
+            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
               <label htmlFor="feed_type" className="block text-sm font-medium text-gray-300 mb-2">
                 Type of Feed
               </label>
@@ -163,12 +135,7 @@ export default function UserForm() {
               </div>
             </motion.div>
 
-            {/* Quantity */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
-            >
+            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 }}>
               <label htmlFor="quantity" className="block text-sm font-medium text-gray-300 mb-2">
                 Quantity of Feed
               </label>
@@ -186,12 +153,7 @@ export default function UserForm() {
               </div>
             </motion.div>
 
-            {/* Unit */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.6 }}
-            >
+            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.6 }}>
               <label htmlFor="unit" className="block text-sm font-medium text-gray-300 mb-2">
                 Select Weight Unit
               </label>
@@ -215,11 +177,7 @@ export default function UserForm() {
           </div>
 
           {submitStatus === 'error' && (
-            <motion.div 
-              className="flex items-center space-x-2 text-red-400 bg-red-900/20 border border-red-500/20 rounded-lg p-3"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-            >
+            <motion.div className="flex items-center space-x-2 text-red-400 bg-red-900/20 border border-red-500/20 rounded-lg p-3">
               <AlertCircle className="w-5 h-5 flex-shrink-0" />
               <span className="text-sm">{errorMessage}</span>
             </motion.div>
@@ -248,20 +206,6 @@ export default function UserForm() {
             )}
           </motion.button>
         </form>
-
-        <motion.div 
-          className="mt-8 text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-        >
-          <Link
-            to="/admin"
-            className="text-gray-400 hover:text-white text-sm transition-colors duration-300"
-          >
-            Admin Access
-          </Link>
-        </motion.div>
       </motion.div>
     </motion.div>
   )
