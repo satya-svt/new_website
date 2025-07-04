@@ -41,7 +41,7 @@ export default function UserForm() {
     try {
       // Get the current user's email
       const userEmail = await getCurrentUserEmail()
-
+      
       if (!userEmail) {
         throw new Error('User email not found. Please ensure you are logged in.')
       }
@@ -57,7 +57,7 @@ export default function UserForm() {
         priority: 'medium',
         user_email: userEmail
       }
-
+      
       const { error } = await supabase.from('data_rows').insert([dataToInsert])
       if (error) throw error
       setSubmitStatus('success')
@@ -76,13 +76,13 @@ export default function UserForm() {
 
   if (submitStatus === 'success') {
     return (
-      <motion.div
+      <motion.div 
         className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <motion.div
+        <motion.div 
           className="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 text-center"
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -107,13 +107,13 @@ export default function UserForm() {
   }
 
   return (
-    <motion.div
+    <motion.div 
       className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <motion.div
+      <motion.div 
         className="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 shadow-2xl"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -215,7 +215,7 @@ export default function UserForm() {
           </div>
 
           {submitStatus === 'error' && (
-            <motion.div
+            <motion.div 
               className="flex items-center space-x-2 text-red-400 bg-red-900/20 border border-red-500/20 rounded-lg p-3"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -249,7 +249,7 @@ export default function UserForm() {
           </motion.button>
         </form>
 
-        <motion.div
+        <motion.div 
           className="mt-8 text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

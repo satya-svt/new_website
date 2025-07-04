@@ -23,14 +23,14 @@ export default function AdminDashboard() {
   // Calculate feed statistics
   const calculateFeedStats = () => {
     if (responses.length === 0) return { totalQuantity: 0, averageQuantity: 0 }
-
+    
     const totalQuantity = responses.reduce((sum, response) => {
       const quantity = parseFloat(response.value?.toString() || '0') || 0
       return sum + quantity
     }, 0)
-
+    
     const averageQuantity = totalQuantity / responses.length
-
+    
     return {
       totalQuantity: Math.round(totalQuantity * 100) / 100,
       averageQuantity: Math.round(averageQuantity * 100) / 100
@@ -39,8 +39,8 @@ export default function AdminDashboard() {
 
   // Get unique users for filtering
   const uniqueUsers = Array.from(new Set(responses.map(r => r.user_email).filter(Boolean)))
-  const filteredResponses = selectedUser === 'all'
-    ? responses
+  const filteredResponses = selectedUser === 'all' 
+    ? responses 
     : responses.filter(r => r.user_email === selectedUser)
 
   const feedStats = calculateFeedStats()
@@ -116,14 +116,14 @@ export default function AdminDashboard() {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
-        <motion.form
-          onSubmit={handleAuth}
+        <motion.form 
+          onSubmit={handleAuth} 
           className="bg-white/10 p-8 rounded-xl backdrop-blur-lg border border-white/20 max-w-md w-full"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <motion.h1
+          <motion.h1 
             className="text-white text-2xl font-bold mb-4 text-center"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -143,7 +143,7 @@ export default function AdminDashboard() {
             transition={{ delay: 0.3 }}
           />
           {authError && (
-            <motion.p
+            <motion.p 
               className="text-red-400 text-sm mb-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -151,8 +151,8 @@ export default function AdminDashboard() {
               {authError}
             </motion.p>
           )}
-          <motion.button
-            type="submit"
+          <motion.button 
+            type="submit" 
             className="w-full bg-gray-800 hover:bg-gray-700 text-white py-3 rounded-lg transition-all duration-300 transform hover:scale-105"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -183,13 +183,13 @@ export default function AdminDashboard() {
   }
 
   return (
-    <motion.div
+    <motion.div 
       className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black p-6 text-white"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <motion.div
+      <motion.div 
         className="flex justify-between items-center mb-6"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -197,8 +197,8 @@ export default function AdminDashboard() {
       >
         <h1 className="text-3xl font-bold">Admin Dashboard</h1>
         <div className="flex gap-4">
-          <motion.button
-            onClick={exportData}
+          <motion.button 
+            onClick={exportData} 
             className="bg-green-600 px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-green-700 transition-all duration-300"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -206,8 +206,8 @@ export default function AdminDashboard() {
             <Download className="w-4 h-4" />
             Export CSV
           </motion.button>
-          <motion.button
-            onClick={() => setIsAuthenticated(false)}
+          <motion.button 
+            onClick={() => setIsAuthenticated(false)} 
             className="bg-red-600 px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-red-700 transition-all duration-300"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -219,13 +219,13 @@ export default function AdminDashboard() {
       </motion.div>
 
       {/* Stats */}
-      <motion.div
+      <motion.div 
         className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
-        <motion.div
+        <motion.div 
           className="bg-white/10 p-6 rounded-lg border border-white/20 backdrop-blur-lg"
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.2 }}
@@ -236,7 +236,7 @@ export default function AdminDashboard() {
             {selectedUser === 'all' ? 'All users' : `User: ${selectedUser}`}
           </p>
         </motion.div>
-        <motion.div
+        <motion.div 
           className="bg-white/10 p-6 rounded-lg border border-white/20 backdrop-blur-lg"
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.2 }}
@@ -244,7 +244,7 @@ export default function AdminDashboard() {
           <p className="text-sm text-gray-300">Unique Feed Types</p>
           <p className="text-3xl font-bold">{Object.keys(responsesByCategory).length}</p>
         </motion.div>
-        <motion.div
+        <motion.div 
           className="bg-white/10 p-6 rounded-lg border border-white/20 backdrop-blur-lg"
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.2 }}
@@ -257,7 +257,7 @@ export default function AdminDashboard() {
       </motion.div>
 
       {/* User Filter */}
-      <motion.div
+      <motion.div 
         className="mb-8"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -268,10 +268,11 @@ export default function AdminDashboard() {
           <div className="flex flex-wrap gap-2">
             <motion.button
               onClick={() => setSelectedUser('all')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${selectedUser === 'all'
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                selectedUser === 'all'
                   ? 'bg-blue-600 text-white'
                   : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                }`}
+              }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -281,10 +282,11 @@ export default function AdminDashboard() {
               <motion.button
                 key={email}
                 onClick={() => setSelectedUser(email)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${selectedUser === email
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                  selectedUser === email
                     ? 'bg-blue-600 text-white'
                     : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                  }`}
+                }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -296,7 +298,7 @@ export default function AdminDashboard() {
       </motion.div>
 
       {/* Feed Stats Section */}
-      <motion.div
+      <motion.div 
         className="mb-8"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -307,7 +309,7 @@ export default function AdminDashboard() {
           <h2 className="text-2xl font-bold">Feed Statistics</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <motion.div
+          <motion.div 
             className="bg-gradient-to-r from-blue-600/20 to-blue-800/20 p-6 rounded-lg border border-blue-500/20 backdrop-blur-lg"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
@@ -319,7 +321,7 @@ export default function AdminDashboard() {
             <p className="text-3xl font-bold text-white">{feedStats.totalQuantity.toLocaleString()}</p>
             <p className="text-sm text-blue-200 mt-1">Total value across all entries</p>
           </motion.div>
-          <motion.div
+          <motion.div 
             className="bg-gradient-to-r from-green-600/20 to-green-800/20 p-6 rounded-lg border border-green-500/20 backdrop-blur-lg"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
@@ -335,13 +337,13 @@ export default function AdminDashboard() {
       </motion.div>
 
       {/* Charts */}
-      <motion.div
+      <motion.div 
         className="grid grid-cols-1 lg:grid-cols-2 gap-8"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
       >
-        <motion.div
+        <motion.div 
           className="bg-white/10 p-6 rounded-lg border border-white/20 backdrop-blur-lg"
           whileHover={{ scale: 1.01 }}
           transition={{ duration: 0.2 }}
@@ -358,7 +360,7 @@ export default function AdminDashboard() {
           </ResponsiveContainer>
         </motion.div>
 
-        <motion.div
+        <motion.div 
           className="bg-white/10 p-6 rounded-lg border border-white/20 backdrop-blur-lg"
           whileHover={{ scale: 1.01 }}
           transition={{ duration: 0.2 }}
@@ -387,7 +389,7 @@ export default function AdminDashboard() {
       </motion.div>
 
       {/* Raw Data */}
-      <motion.div
+      <motion.div 
         className="mt-10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -407,7 +409,7 @@ export default function AdminDashboard() {
         </div>
 
         {showRawData && (
-          <motion.div
+          <motion.div 
             className="overflow-x-auto border border-white/10 rounded-lg backdrop-blur-lg"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -434,10 +436,11 @@ export default function AdminDashboard() {
                     <td className="px-6 py-4">{r.value}</td>
                     <td className="px-6 py-4">{r.status}</td>
                     <td className="px-6 py-4">
-                      <span className={`px-2 py-1 rounded-full text-xs ${r.user_email
-                          ? 'bg-green-900/20 text-green-400 border border-green-500/20'
+                      <span className={`px-2 py-1 rounded-full text-xs ${
+                        r.user_email 
+                          ? 'bg-green-900/20 text-green-400 border border-green-500/20' 
                           : 'bg-gray-900/20 text-gray-400 border border-gray-500/20'
-                        }`}>
+                      }`}>
                         {r.user_email || 'Anonymous'}
                       </span>
                     </td>

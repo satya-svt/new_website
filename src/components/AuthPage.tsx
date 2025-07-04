@@ -102,13 +102,19 @@ export default function AuthPage() {
     console.log('Starting Google OAuth flow...')
     
     try {
-      // Direct OAuth URL
-      const oauthUrl = 'https://jtxlvoktuqampnqttpfi.supabase.co/auth/v1/authorize?provider=google&redirect_to=http://localhost:5173/form'
+      // Get the current origin (Bolt project URL)
+      const currentOrigin = window.location.origin
+      const redirectUrl = `${currentOrigin}/form`
       
-      console.log('Redirecting to OAuth URL:', oauthUrl)
+      // Use Supabase OAuth with proper redirect URL
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: redirectUrl
+        }
+      })
       
-      // Redirect directly to the OAuth URL
-      window.location.href = oauthUrl
+      if (error) throw error
       
     } catch (error) {
       console.error('OAuth Error:', error)
